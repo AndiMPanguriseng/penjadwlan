@@ -21,31 +21,48 @@ class PengampuTMJResource extends Resource
 
     protected static ?string $navigationLabel = 'Pengampu TMJ';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->check() && auth()->user()->role === 'kaproditmj';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('matkul_id')->label('Mata Kuliah')
-                ->relationship('matkul', 'nama_mata_kuliah', fn (Builder $query) =>
-                    $query->where('Prodi', 'D4-Teknik Multimedia Jaringan') // Ganti sesuai prodi yang diinginkan
-                )
-                ->required(),
+                    ->relationship(
+                        'matkul',
+                        'nama_mata_kuliah',
+                        fn(Builder $query) =>
+                        $query->where('Prodi', 'D4-Teknik Multimedia Jaringan') // Ganti sesuai prodi yang diinginkan
+                    )
+                    ->required(),
                 Forms\Components\Select::make('dosen_pj')->label('Dosen PJ')
-                ->relationship('dosenPJ', 'Nama_Dosen', fn (Builder $query) =>
-                    $query->where('Prodi', 'D4-Teknik Multimedia Jaringan') // Ganti sesuai prodi yang diinginkan
-                )
-                ->required(),
+                    ->relationship(
+                        'dosenPJ',
+                        'Nama_Dosen',
+                        fn(Builder $query) =>
+                        $query->where('Prodi', 'D4-Teknik Multimedia Jaringan') // Ganti sesuai prodi yang diinginkan
+                    )
+                    ->required(),
                 Forms\Components\Select::make('dosen_anggota')->label('Dosen Anggota')
-                ->relationship('dosenAnggota', 'Nama_Dosen', fn (Builder $query) =>
-                    $query->where('Prodi', 'D4-Teknik Multimedia Jaringan') // Ganti sesuai prodi yang diinginkan
-                )
-                ->required(),
+                    ->relationship(
+                        'dosenAnggota',
+                        'Nama_Dosen',
+                        fn(Builder $query) =>
+                        $query->where('Prodi', 'D4-Teknik Multimedia Jaringan') // Ganti sesuai prodi yang diinginkan
+                    )
+                    ->required(),
 
                 Forms\Components\Select::make('kelas_id')->label('Kelas')
-                ->relationship('kelas', 'nama_kelas', fn (Builder $query) =>
-                    $query->where('Prodi', 'D4-Teknik Multimedia Jaringan') // Ganti sesuai prodi yang diinginkan
-                )
-                ->required(),
+                    ->relationship(
+                        'kelas',
+                        'nama_kelas',
+                        fn(Builder $query) =>
+                        $query->where('Prodi', 'D4-Teknik Multimedia Jaringan') // Ganti sesuai prodi yang diinginkan
+                    )
+                    ->required(),
 
                 Forms\Components\TextInput::make('jumlah_jam')->label('Jumlah Jam')->required(),
             ]);

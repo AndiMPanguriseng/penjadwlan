@@ -17,7 +17,9 @@ class ListPengampus extends ListRecords
         ];
     }
 
-    public function getTitle(): string {
+
+    public function getTitle(): string
+    {
         return "Pengampu";
     }
 }

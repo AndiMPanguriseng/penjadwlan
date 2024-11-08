@@ -25,6 +25,11 @@ class DosenResource extends Resource
 
     protected static ?string $navigationLabel = 'Dosen';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->check() &&  auth()->user()->role === 'admin';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -32,10 +37,10 @@ class DosenResource extends Resource
                 Forms\Components\TextInput::make('Nama_Dosen')->required(),
                 Forms\Components\TextInput::make('NIP')->required(),
                 Forms\Components\Select::make('Prodi')
-                ->options([
-                    'D4-Teknik Komputer Jaringan' => 'D4-Teknik Komputer Jaringan',
-                    'D4-Teknik Multimedia Jaringan' => 'D4-Teknik Multimedia Jaringan',
-                ])->required(),
+                    ->options([
+                        'D4-Teknik Komputer Jaringan' => 'D4-Teknik Komputer Jaringan',
+                        'D4-Teknik Multimedia Jaringan' => 'D4-Teknik Multimedia Jaringan',
+                    ])->required(),
             ]);
     }
 
@@ -49,10 +54,10 @@ class DosenResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('Prodi')
-                ->options([
-                    'D4-Teknik Komputer Jaringan' => 'D4-Teknik Komputer Jaringan',
-                    'D4-Teknik Multimedia Jaringan' => 'D4-Teknik Multimedia Jaringan',
-                ]),
+                    ->options([
+                        'D4-Teknik Komputer Jaringan' => 'D4-Teknik Komputer Jaringan',
+                        'D4-Teknik Multimedia Jaringan' => 'D4-Teknik Multimedia Jaringan',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

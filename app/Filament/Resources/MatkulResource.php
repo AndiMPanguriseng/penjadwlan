@@ -25,6 +25,10 @@ class MatkulResource extends Resource
 
     protected static ?string $navigationLabel = 'Mata Kuliah';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->check() &&  auth()->user()->role === 'admin';
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -33,10 +37,10 @@ class MatkulResource extends Resource
                 Forms\Components\TextInput::make('kode_mata_kuliah')->required(),
                 Forms\Components\TextInput::make('sks')->required(),
                 Forms\Components\Select::make('Prodi')
-                ->options([
-                    'D4-Teknik Komputer Jaringan' => 'D4-Teknik Komputer Jaringan',
-                    'D4-Teknik Multimedia Jaringan' => 'D4-Teknik Multimedia Jaringan',
-                ])->required(),
+                    ->options([
+                        'D4-Teknik Komputer Jaringan' => 'D4-Teknik Komputer Jaringan',
+                        'D4-Teknik Multimedia Jaringan' => 'D4-Teknik Multimedia Jaringan',
+                    ])->required(),
             ]);
     }
 
@@ -51,15 +55,15 @@ class MatkulResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('sks')
-                ->options([
-                    '2' => '2',
-                    '3' => '3',
-                ]),
+                    ->options([
+                        '2' => '2',
+                        '3' => '3',
+                    ]),
                 Tables\Filters\SelectFilter::make('Prodi')
-                ->options([
-                    'D4-Teknik Komputer Jaringan' => 'D4-Teknik Komputer Jaringan',
-                    'D4-Teknik Multimedia Jaringan' => 'D4-Teknik Multimedia Jaringan',
-                ]),
+                    ->options([
+                        'D4-Teknik Komputer Jaringan' => 'D4-Teknik Komputer Jaringan',
+                        'D4-Teknik Multimedia Jaringan' => 'D4-Teknik Multimedia Jaringan',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

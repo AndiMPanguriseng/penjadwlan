@@ -21,6 +21,10 @@ class PengampuResource extends Resource
 
     protected static ?string $navigationLabel = 'Pengampu';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->check() &&  auth()->user()->role === 'sekjur';
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -34,35 +38,33 @@ class PengampuResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('matkul.nama_mata_kuliah')
-                ->label('Mata Kuliah')
-                ->searchable()
-                ->sortable(),
+                    ->label('Mata Kuliah')
+                    ->searchable()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('dosenPJ.Nama_Dosen')
-                ->label('Dosen PJ')
-                ->searchable()
-                ->sortable(),
+                Tables\Columns\TextColumn::make('dosenPJ.Nama_Dosen')
+                    ->label('Dosen PJ')
+                    ->searchable()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('dosenAnggota.Nama_Dosen')
-                ->label('Dosen Anggota')
-                ->searchable()
-                ->sortable(),
+                Tables\Columns\TextColumn::make('dosenAnggota.Nama_Dosen')
+                    ->label('Dosen Anggota')
+                    ->searchable()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('kelas.nama_kelas')
-                ->label('Kelas')
-                ->searchable()
-                ->sortable(),
+                Tables\Columns\TextColumn::make('kelas.nama_kelas')
+                    ->label('Kelas')
+                    ->searchable()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('jumlah_jam')
-                ->label('Jumlah Jam')
-                ->sortable(),
+                Tables\Columns\TextColumn::make('jumlah_jam')
+                    ->label('Jumlah Jam')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                
-            ])
+            ->actions([])
             ->bulkActions([]);
     }
 
